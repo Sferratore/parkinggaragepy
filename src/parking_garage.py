@@ -1,4 +1,5 @@
 import time
+import math
 from datetime import datetime
 
 DEPLOYMENT = False # This variable is to understand whether you are deploying on the actual hardware
@@ -53,8 +54,10 @@ class ParkingGarage:
         return count
 
     def calculate_parking_fee(self, entry_time: datetime) -> float:
-        # To be implemented
-        pass
+        time_to_pay =  math.ceil(((self.rtc.read_datetime() - entry_time).total_seconds()/3600))
+        return 2.50*time_to_pay
+
+
 
     def open_garage_door(self) -> None:
         # To be implemented
