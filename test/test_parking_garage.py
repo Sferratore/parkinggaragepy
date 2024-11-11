@@ -63,3 +63,22 @@ class TestParkingGarage(TestCase):
         system.red_light_on = True
         system.turn_off_red_light()
         self.assertTrue(not system.red_light_on)
+
+    #L'ordine degli assegnamenti agli oggetti di mock in argomento è all'inverso rispetto ai decoratori (dal basso il primo, verso l'alto gli altri)
+    @patch.object(ParkingGarage, "turn_off_red_light")
+    @patch.object(GPIO, "input")
+    def test_manage_red_light_when_not_full(self, mock_distance_sensor: Mock, mock_parking_garage: Mock):
+        mock_distance_sensor.side_effect = [True, False, True]
+        system = ParkingGarage()
+        system.manage_red_light()
+        mock_parking_garage.assert_called()
+        self.assertTrue(system.manage_red_light)
+
+    @patch.object(ParkingGarage, "turn_on_red_light")
+    @patch.object(GPIO, "input")
+    def test_manage_red_light_when_full(self, mock_distance_sensor: Mock, mock_parking_garage: Mock):
+        mock_distance_sensor.side_effect = [True, True, True]
+        system = ParkingGarage()
+        system.manage_red_light()
+        mock_parking_garage.assert_called()
+        self.assertTrue(system.manage_red_light)

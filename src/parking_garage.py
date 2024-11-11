@@ -79,7 +79,6 @@ class ParkingGarage:
         self.red_light_on = False
 
     def manage_red_light(self) -> None:
-        # To be implemented
         pass
 
     def change_servo_angle(self, duty_cycle):
