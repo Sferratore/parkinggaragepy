@@ -16,6 +16,12 @@ class TestParkingGarage(TestCase):
         occupied = system.check_occupancy(system.INFRARED_PIN1) # Act (dentro check_occupancy dovrà esserci la funzione input dic GPIO che verrà mock-ata a true)
         self.assertTrue(occupied) # Assert
 
+    @patch.object(GPIO, "input")
+    def test_check_number_occupied_spots(self, mock_distance_sensor: Mock):
+        mock_distance_sensor.return_value = [True, False, True] # Mock dell'uso di GPIO.input tre volte
+        system = ParkingGarage()
+        num = system.get_number_occupied_spots()
+        self.assertEqual(num, 2)
 
 
 
