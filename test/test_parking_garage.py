@@ -18,7 +18,7 @@ class TestParkingGarage(TestCase):
 
     @patch.object(GPIO, "input")
     def test_check_number_occupied_spots(self, mock_distance_sensor: Mock):
-        mock_distance_sensor.return_value = [True, False, True] # Mock dell'uso di GPIO.input tre volte
+        mock_distance_sensor.side_effect = [True, False, True] # Mock dell'uso di GPIO.input tre volte. Per dare un array di risultati diversi ogni chiamata va usato side_effect, return_value va bene solo per un valore costante.
         system = ParkingGarage()
         num = system.get_number_occupied_spots()
         self.assertEqual(num, 2)
