@@ -54,8 +54,12 @@ class ParkingGarage:
         return count
 
     def calculate_parking_fee(self, entry_time: datetime) -> float:
-        time_to_pay =  math.ceil(((self.rtc.read_datetime() - entry_time).total_seconds()/3600))
-        return 2.50*time_to_pay
+        exit_time = self.rtc.read_datetime()
+        time_to_pay =  math.ceil(((exit_time - entry_time).total_seconds()/3600))
+        cost = 2.50 * time_to_pay
+        if exit_time.weekday() in [5,6]:
+            cost += cost/100*25
+        return cost
 
 
 
