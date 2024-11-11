@@ -64,7 +64,6 @@ class ParkingGarage:
 
 
     def open_garage_door(self) -> None:
-        # To be implemented
         pass
 
     def close_garage_door(self) -> None:

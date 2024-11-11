@@ -39,4 +39,16 @@ class TestParkingGarage(TestCase):
         cost = system.calculate_parking_fee(datetime(2024, 11, 10, 12, 00))
         self.assertEqual(cost, 12.5)
 
+    @patch.object(ParkingGarage, "change_servo_angle")
+    def test_open_garage_door(self, mock_servo: Mock):
+        system = ParkingGarage()
+        system.open_garage_door()
+        mock_servo.assert_called_with(12) # Controlla che il metodo change_servo_angle venga usato con argomento "12". Genera assertionerror se non succede!
+        self.assertTrue(system.open_garage_door) # Questo qui da sempre true se il metodo esiste
 
+    @patch.object(ParkingGarage, "change_servo_angle")
+    def test_closed_garage_door(self, mock_servo: Mock):
+        system = ParkingGarage()
+        system.close_garage_door()
+        mock_servo.assert_called_with(0)  # Controlla che il metodo change_servo_angle venga usato con argomento "12". Genera assertionerror se non succede!
+        self.assertTrue(system.close_garage_door)  # Questo qui da sempre true se il metodo esiste
