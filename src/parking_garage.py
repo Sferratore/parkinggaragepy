@@ -73,7 +73,6 @@ class ParkingGarage:
 
 
     def turn_on_red_light(self) -> None:
-        # To be implemented
         pass
 
     def turn_off_red_light(self) -> None:

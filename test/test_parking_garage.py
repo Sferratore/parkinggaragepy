@@ -52,3 +52,14 @@ class TestParkingGarage(TestCase):
         system.close_garage_door()
         mock_servo.assert_called_with(0)  # Controlla che il metodo change_servo_angle venga usato con argomento "12". Genera assertionerror se non succede!
         self.assertTrue(system.close_garage_door)  # Questo qui da sempre true se il metodo esiste
+
+    def test_red_light_on(self):
+        system = ParkingGarage()
+        system.turn_on_red_light()
+        self.assertTrue(system.red_light_on)
+
+    def test_red_light_off(self):
+        system = ParkingGarage()
+        system.red_light_on = True
+        system.turn_off_red_light()
+        self.assertTrue(not system.red_light_on)
