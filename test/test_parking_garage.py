@@ -43,7 +43,7 @@ class TestParkingGarage(TestCase):
         cost = system.calculate_parking_fee(datetime(2024, 11, 10, 12, 00))
         self.assertEqual(cost, 12.5)
 
-    # ESEMPIO DI TEST SPY (Osservazione di OUTPUT INDIRETTO)
+    # ESEMPIO DI MOCK OBJECT (Analisi e asserzione su OUTPUT INDIRETTO), non TEST SPY in quanto questo si occupa solamente di osservare
     @patch.object(ParkingGarage, "change_servo_angle")
     def test_open_garage_door(self, mock_servo: Mock):
         system = ParkingGarage()
@@ -51,13 +51,23 @@ class TestParkingGarage(TestCase):
         mock_servo.assert_called_with(12) # Controlla che il metodo change_servo_angle venga usato con argomento "12". Genera assertionerror se non succede!
         self.assertTrue(system.open_garage_door) # Questo qui da sempre true se il metodo esiste
 
-    # ESEMPIO DI TEST SPY (Osservazione di OUTPUT INDIRETTO)
+    # ESEMPIO DI MOCK OBJECT (Analisi e asserzione su OUTPUT INDIRETTO), non TEST SPY in quanto questo si occupa solamente di osservare
     @patch.object(ParkingGarage, "change_servo_angle")
     def test_closed_garage_door(self, mock_servo: Mock):
         system = ParkingGarage()
         system.close_garage_door()
         mock_servo.assert_called_with(0)  # Controlla che il metodo change_servo_angle venga usato con argomento "12". Genera assertionerror se non succede!
         self.assertTrue(system.close_garage_door)  # Questo qui da sempre true se il metodo esiste
+
+    @patch.object(ParkingGarage, "change_servo_angle")  # Questo è un TEST SPY (Osservazione di OUTPUT INDIRETTO)
+    def test_closed_garage_door_spy(self, mock_servo: Mock):
+        system = ParkingGarage()
+        system.close_garage_door()
+        # Il Test Spy si limita a osservare senza fare asserzioni attive né influenza input indiretti.
+        calls = mock_servo.call_args_list  # Osserva le chiamate effettuate
+        print(f"Calls made to change_servo_angle: {calls}")  # Output solo per osservazione
+        self.assertTrue(
+            len(calls) > 0)  # Verifica che almeno una chiamata è stata fatta (opzionale, non verifica gli argomenti esatti)
 
     # Osservazione di output diretto
     def test_red_light_on(self):
@@ -73,7 +83,7 @@ class TestParkingGarage(TestCase):
         self.assertTrue(not system.red_light_on)
 
     #L'ordine degli assegnamenti agli oggetti di mock in argomento è all'inverso rispetto ai decoratori (dal basso il primo, verso l'alto gli altri)
-    @patch.object(ParkingGarage, "turn_off_red_light") # Questo è un TEST SPY (controlla OUTPUT INDIRETTO)
+    @patch.object(ParkingGarage, "turn_off_red_light") # Questo è un MOCK OBJECT (Analisi e asserzione su OUTPUT INDIRETTO)
     @patch.object(GPIO, "input") # Questo è un TEST STUB (inietta INPUT INDIRETTI)
     def test_manage_red_light_when_not_full(self, mock_distance_sensor: Mock, mock_parking_garage: Mock):
         mock_distance_sensor.side_effect = [True, False, True]
@@ -82,7 +92,7 @@ class TestParkingGarage(TestCase):
         mock_parking_garage.assert_called()
         self.assertTrue(system.manage_red_light)
 
-    @patch.object(ParkingGarage, "turn_off_red_light")  # Questo è un TEST SPY (controlla OUTPUT INDIRETTO)
+    @patch.object(ParkingGarage, "turn_off_red_light")  # Questo è un MOCK OBJECT (Analisi e asserzione su OUTPUT INDIRETTO)
     @patch.object(GPIO, "input")  # Questo è un TEST STUB (inietta INPUT INDIRETTI)
     def test_manage_red_light_when_full(self, mock_distance_sensor: Mock, mock_parking_garage: Mock):
         mock_distance_sensor.side_effect = [True, True, True]
