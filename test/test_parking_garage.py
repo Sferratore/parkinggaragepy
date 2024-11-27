@@ -11,7 +11,8 @@ from src.parking_garage import ParkingGarageError
 
 class TestParkingGarage(TestCase):
 
-    @patch.object(GPIO, "input") # Stabilisco di voler fare mock della funzione "input" di GPIO
+    # ESEMPIO DI TEST STUB (Replacement di INPUT INDIRETTO)
+    @patch.object(GPIO, "input") # Stabilisco di voler fare mock della funzione "input" di GPIO. Questo è un test stub (responder).
     def test_check_occupancy(self, mock_distance_sensor: Mock):
         mock_distance_sensor.return_value = True # Stabilisco che il valore di restituzione della funzione di "input" di GPIO sia true quando chiamata
         system = ParkingGarage() # Arrange
