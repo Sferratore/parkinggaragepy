@@ -28,7 +28,7 @@ class TestParkingGarage(TestCase):
         self.assertEqual(num, 2)
 
     # ESEMPIO DI TEST STUB (Replacement di INPUT INDIRETTO)
-    @patch.object(SDL_DS3231, "read_datetime")
+    @patch.object(SDL_DS3231, "read_datetime") # Si potrebbe usare anche @patch("SDL_DS3231.read_datetime") qui così come negli altri casi, ma "patch" è di solito usato per funzioni contenute all'interno di moduli.
     def test_parking_fee_regular_days(self, mock_time_sensor: Mock):
         mock_time_sensor.return_value = datetime(2024, 11, 11, 15, 45)
         system = ParkingGarage()
