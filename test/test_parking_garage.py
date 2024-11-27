@@ -9,6 +9,21 @@ from mock.SDL_DS3231 import SDL_DS3231
 from src.parking_garage import ParkingGarage
 from src.parking_garage import ParkingGarageError
 
+
+# NOTA: In questa classe di test non è presente un DUMMY OBJECT.
+# Ipotesi: un dummy object potrebbe essere utilizzato se ParkingGarage accettasse, ad esempio,
+# un logger come dipendenza, e quel logger non fosse rilevante per il test.
+# Ad esempio:
+#
+# class DummyLogger:
+#     def info(self, message):
+#         pass
+#     def error(self, message):
+#         pass
+#
+# E il ParkingGarage potrebbe essere inizializzato con:
+# dummy_logger = DummyLogger()
+# system = ParkingGarage(logger=dummy_logger)
 class TestParkingGarage(TestCase):
 
     # ESEMPIO DI TEST STUB (Replacement di INPUT INDIRETTO)

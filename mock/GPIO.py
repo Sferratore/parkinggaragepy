@@ -1,5 +1,5 @@
 """
-Mock Library for RPi.GPIO. This implements class "Channel" which produces FAKE OBJECTS.
+Mock Library for RPi.GPIO. Implementa la classe "Channel" che produce dei FAKE OBJECT.
 """
 
 import logging
