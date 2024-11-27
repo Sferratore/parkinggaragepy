@@ -1,5 +1,5 @@
 from datetime import datetime
-# Mock library for https://github.com/switchdoclabs/RTC_SDL_DS3231
+# Mock library for https://github.com/switchdoclabs/RTC_SDL_DS3231. This is a FAKE OBJECT too.
 
 class SDL_DS3231:
 
